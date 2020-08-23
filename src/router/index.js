@@ -105,6 +105,19 @@ export const asyncRoutes = [
   /** when your routing map is too long, you can split it into small modules **/
   // componentsRouter,
 
+  {
+    path: '/pet',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'pet',
+        component: () => import('@/views/pet/index'),
+        meta: { title: '반려동물', icon: 'table' }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
