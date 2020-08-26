@@ -2,25 +2,26 @@
   <div class="app-container">
     <el-table
       v-loading="listLoading"
-      :data="tableData"
+      :data="list"
       element-loading-text="Loading"
       border
       fit
       highlight-current-row
     >
       <el-table-column
-        prop="date"
-        label="Date"
+        prop="petName"
+        label="애견이름"
         width="180"
       />
       <el-table-column
-        prop="name"
-        label="Name"
+        prop="createdAt"
+        label="날짜"
         width="180"
       />
       <el-table-column
-        prop="address"
-        label="Address"
+        prop="status"
+        label="상태"
+        width="180"
       />
     </el-table>
 
@@ -49,8 +50,11 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        // this.list = response.data.items
+        // this.total = response.data.total
+        console.log(response)
+
+        this.list = response
         this.listLoading = false
       })
     }
