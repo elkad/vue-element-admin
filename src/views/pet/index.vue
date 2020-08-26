@@ -1,19 +1,14 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-    </div>
-
     <el-table
+      :key="tableKey"
       v-loading="listLoading"
       :data="list"
       element-loading-text="Loading"
       border
       fit
       highlight-current-row
+      style="width: 100%;"
     >
       <el-table-column label="ID" align="center" width="95">
         <template slot-scope="{row}">
@@ -24,19 +19,16 @@
         prop="petName"
         label="애견이름"
         align="center"
-        width="180"
       />
       <el-table-column
         prop="createdAt"
         label="날짜"
         align="center"
-        width="180"
       />
       <el-table-column
         prop="status"
         label="상태"
         align="center"
-        width="180"
       />
     </el-table>
 
@@ -80,12 +72,11 @@ export default {
       dialogPetVisible: false,
       pet: [],
       list: null,
-      total: 1,
+      total: 0,
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: 20,
-        title: undefined
+        limit: 20
       }
     }
   },
@@ -100,11 +91,10 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        // this.list = response.data.items
-        // this.total = response.data.total
         console.log(response)
 
-        this.list = response
+        this.list = response.content
+        this.total = response.totalCount
         this.listLoading = false
       })
     },
